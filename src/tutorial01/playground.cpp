@@ -1,6 +1,5 @@
 // Include standard headers
 #include <iostream>
-#include <stdlib.h>
 
 // Include GLEW. Always include it before gl.h and glfw.h, since it's a bit magic.
 #include <GL/glew.h>
@@ -11,12 +10,21 @@
 // Include GLM
 #include <glm/glm.hpp>
 
+// key callback function
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+
+    return;
+}
+
 int main (void)
 {
     using namespace std;
     using namespace glm;
 
-    GLFWwindow* window;
+    GLFWwindow* window = NULL;
 
     // Initialise GLFW
     if(!glfwInit())
@@ -35,17 +43,18 @@ int main (void)
         return -1;
     }
 
+    // Make the window's context current
+    glfwMakeContextCurrent(window);
+
     // Initialize GLEW
-    /*
     glewExperimental = true;    // Needed in core profile
     if (glewInit() != GLEW_OK) {
         cerr << "Failed to initilize GLEW" << endl;
+        glfwTerminate();
         return -1;
     }
-    */
 
-    // Make the window's context current
-    glfwMakeContextCurrent(window);
+    glfwSetKeyCallback(window, key_callback);
 
     // Loop until the user closes the window
     while(!glfwWindowShouldClose(window))
