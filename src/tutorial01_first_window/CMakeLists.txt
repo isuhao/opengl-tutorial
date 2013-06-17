@@ -3,7 +3,7 @@ project(tutorial01)
 
 find_package(OpenGL REQUIRED)
 
-add_executable(tutorial01 playground.cpp)
+add_executable(tutorial01 tutorial01.cpp)
 
 set(ALL_LIBS ${OPENGL_LIBRARY} glfw GLEW)
 
