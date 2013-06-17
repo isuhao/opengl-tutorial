@@ -10,6 +10,9 @@
 // Include GLM
 #include <glm/glm.hpp>
 
+using namespace std;
+using namespace glm;
+
 // key callback function
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -19,28 +22,37 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     return;
 }
 
-int main (void)
+// Error callback
+static void error_callback(int error, const char* description)
 {
-    using namespace std;
-    using namespace glm;
+    cerr << description << endl;
 
+    return;
+}
+
+int main (int argc, char* argv[])
+{
     GLFWwindow* window = NULL;
+
+    // Set the error callback, this should be called before glfwInit
+    glfwSetErrorCallback(error_callback);
 
     // Initialise GLFW
     if(!glfwInit())
     {
         cerr << "Failed to initialize GLFW" << endl;
-        return -1;
+        exit(EXIT_FAILURE);
     }
 
     // Create a windowed mode window and its OpenGL context
-    window = glfwCreateWindow (640, 480, "Tutorial01", NULL, NULL);
+    window = glfwCreateWindow (640, 480, argv[0], NULL, NULL);
  
     if(!window)
     {
         cerr << "Failed to open GLFW window" << endl; 
         glfwTerminate();
-        return -1;
+
+        exit(EXIT_FAILURE);
     }
 
     // Make the window's context current
@@ -51,7 +63,7 @@ int main (void)
     if (glewInit() != GLEW_OK) {
         cerr << "Failed to initilize GLEW" << endl;
         glfwTerminate();
-        return -1;
+        exit(EXIT_FAILURE);
     }
 
     glfwSetKeyCallback(window, key_callback);
@@ -68,7 +80,9 @@ int main (void)
         glfwPollEvents();
     }
 
+    glfwDestroyWindow(window);
     glfwTerminate();
-    return 0;
+
+    return(EXIT_SUCCESS);
 }
 
