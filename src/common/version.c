@@ -2,11 +2,11 @@
  * version.c
  */
 
-#include <GL/gl.h>
-
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <GL/glew.h>
 
 #include "version.h"
 
