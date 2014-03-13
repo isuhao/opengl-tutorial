@@ -4,4 +4,4 @@ project(tutorial01)
 
 add_executable(tutorial01 tutorial01.cpp)
 
-target_link_libraries(tutorial01 ${ALL_LIBS})
+target_link_libraries(tutorial01 common ${ALL_LIBS})

@@ -21,5 +21,5 @@ set(ALL_LIBS ${OPENGL_LIBRARY} ${GLFW_LIB} GLEW)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
-add_subdirectory(src/tutorial01_first_window)
+add_subdirectory(src)
 
