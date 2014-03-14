@@ -25,6 +25,9 @@ endif()
 
 set(ALL_LIBS ${OPENGL_LIBRARY} ${GLFW_LIB} GLEW)
 
+# GLM setting
+add_definitions(-DGLM_FORCE_RADIANS)
+
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 add_subdirectory(src)
