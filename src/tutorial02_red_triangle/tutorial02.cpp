@@ -1,4 +1,6 @@
 // Include standard headers
+#include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
 
 // Include GLEW. Always include it before gl.h and glfw.h, since it's a bit magic.
@@ -10,10 +12,29 @@
 // Include GLM
 #include <glm/glm.hpp>
 
+#include <version.h>
 #include <shader.h>
 
 using namespace std;
 using namespace glm;
+
+static const char* vertex_shader = 
+	"#version 330 core\n"
+	"layout(location = 0) in vec3 vertexPosition_modelspace;"
+	""
+	"void main(){"
+    "	gl_Position.xyz = vertexPosition_modelspace;"
+    "	gl_Position.w = 1.0;"
+	"}";
+
+static const char* fragment_shader =
+	"#version 330 core\n"
+	"out vec3 color;"
+	""
+	"void main()"
+	"{"
+	"	color = vec3(1,0,0);"
+	"}";
 
 // key callback function
 static void key_callback (GLFWwindow* window, int key, int scancode, int action,
@@ -72,6 +93,12 @@ int main (int argc, char* argv[])
 		exit(EXIT_FAILURE);
 	}
 
+	int major = 0, minor = 0;
+	get_version (&major, &minor);
+	fprintf (stdout, "GL version: %d.%d\n", major, minor);
+	get_glsl_version (&major, &minor);
+	fprintf (stdout, "GLSL version: %d.%d\n", major, minor);
+
 	glfwSetKeyCallback(window, key_callback);
 
 	// Dark blue background
@@ -82,7 +109,7 @@ int main (int argc, char* argv[])
 	glBindVertexArray(VertexArrayID);
 
 	// Create and compile our GLSL program from the shaders
-	GLuint programID = load_shader_files ("SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader");
+	GLuint programID = load_shaders (vertex_shader, fragment_shader);
 
 	static const GLfloat g_vertex_buffer_data[] = {
 		-1.0f, -1.0f, 0.0f,
