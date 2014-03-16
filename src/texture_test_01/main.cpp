@@ -16,6 +16,7 @@ using namespace glm;
 
 #include <shader.h>
 #include <texture.h>
+#include <util.h>
 
 static const char* vertex_shader = 
 	"#version 330 core\n"
@@ -39,8 +40,13 @@ static const char* fragment_shader =
 	"	color = texture(texID, UV);"
 	"}";
 
-int main( void )
+int main (int argc, char* argv[])
 {
+    if(argc != 2) {
+        fprintf(stdout, "Usage: %s <image.bmp>\n", get_base_name(argv[0]));
+        return -1;
+    }
+
 	// Initialise GLFW
 	if( !glfwInit() )
 	{

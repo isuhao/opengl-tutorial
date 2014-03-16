@@ -17,6 +17,8 @@ using namespace glm;
 #include <shader.h>
 #include <texture.h>
 
+#include <util.h>
+
 #define BUFFER_OFFSET(bytes) ((GLubyte*) NULL + (bytes))
 
 static const char* vertex_shader = 
@@ -41,8 +43,13 @@ static const char* fragment_shader =
 	"	color = texture(texID, UV);"
 	"}";
 
-int main( void )
+int main(int argc, char* argv[])
 {
+    if(argc != 2) {
+        fprintf(stdout, "Usage: %s <image.bmp>\n", get_base_name(argv[0]));
+        return -1;
+    }
+
 	// Initialise GLFW
 	if( !glfwInit() )
 	{
@@ -112,7 +119,7 @@ int main( void )
 	glm::mat4 MVP        = Projection * View * Model; // Remember, matrix multiplication is the other way around
 
 	// Load the texture using any two methods
-	GLuint Texture = load_bmp_file("uvtemplate.bmp");
+	GLuint Texture = load_bmp_file(argv[1]);
 	//GLuint Texture = load_dds_file("uvtemplate.DDS");
 	
 	// Get a handle for our "myTextureSampler" uniform
